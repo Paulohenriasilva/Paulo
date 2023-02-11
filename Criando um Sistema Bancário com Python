@@ -1,0 +1,62 @@
+#Criando um Sistema Bancário com Python
+
+dicionario1 = {'saques_limite_diario':500, 'saques_limites_realizados':0, 'total_de_depositos':0, 'deposito_feito':0,'total_de_saques':0, 'totaln_de_saques':0, 'totaisn_saques':3, 'saquesn_feitos':0}
+dicionario1['saldo'] = dicionario1['total_de_depositos']- dicionario1['total_de_saques']
+dicionario1['saques_limite_diario_restante'] = dicionario1['saques_limite_diario']-dicionario1['saques_limites_realizados']
+dicionario1['saquesn_restantes'] = 3-dicionario1['saquesn_feitos']
+
+
+
+while True:
+	menu = input('''
+Olá!
+
+d - Depositar
+s - Sacar
+e - Extrato
+z - Sair
+
+Selecione uma das opções acima: ''')
+	opcao=menu.lower()
+	if opcao not in ['d', 's', 'e', 'z']:
+		print('Por favor, escolha uma das opções listadas')
+		continue
+	elif opcao == 'd':
+		deposito = float(input('Digite o valor desejado: '))
+		if deposito >= 0:
+			dicionario1["total_de_depositos"] += deposito
+			print('Depósito realizado com sucesso!')
+		else:
+			print('Valor impossível!')
+			continue
+		continue
+	elif opcao == 's':
+		saque=float(input('Por favor, informe o valor que deseja sacar: '))
+		if saque < float(0):
+			print('Valor impossível. Digite o valor desejado: ')
+			continue
+		elif saque>0 and dicionario1[saquesn_restantes]>3:
+			print('Limite diário de quantidade de saques alcançado.')
+			continue
+			dicionario1[saquesn_feitos] = int(dicionario1[saquesn_feitos]) + 1
+		elif saque>0.01 or dicionario1[saquesn_restantes]>3 or dicionario1[saques_limite_diario_restante]>500:
+			print('Limite diário de saque alcançado')
+			continue
+		elif saque>0.01 or dicionario1[saquesn_restantes]>3 or dicionario1[saques_limite_diario_restante]>500 or dicionario1[saldo]<saque:
+			print('Saldo insuficiente')
+			continue
+		else:
+			dicionario1['total_de_saques'] = dicionario1['total_de_saques'] + saque
+			continue
+	elif opcao == e:
+		extratopedido= f'''
+EXTRATO
+Saldo: {saldo}
+Quantidades de saques disponíveis: {saques_limite_diario_restante}
+Limite de saque disponível: {saques_nrestantes}
+'''
+		print(extratopedido)
+		continue
+	else:
+		print('Obrigado por usar nosso sistema. Tenha um bom dia.')
+		break
