@@ -1,0 +1,144 @@
+#bibliotecas e listas - ok
+bibliotecadecpf=[0]
+bibliotecadenome=['P']
+bibliotecadenascimento=['00/00/0000']
+bibliotecadendereco=['p']
+
+dicionariocadastros = { 'cpf':
+    {'nome': nome,'nascimento':nascimento,'cpf': cpf,'endereco':{
+    'logradouro': rua,"numero": casanumero,'bairro': bairro,'cidade': cidade,'estado': sigladaue}}}
+
+dicionariocontas = {'cpf':{'agencia': 1, 'conta': 0}, 'contas': (1)}
+
+dicionariomovimentações = {'conta':{'saldo':0, 'totaisn_saques':3, 'saquesn_feitos':0, 'saquesn_restantes' : 3, 'saques_limite_diario_restante': 500}}
+
+#0 - ok
+
+def menu0():
+	while True:
+		menu01=int(input('''
+Olá, bem vindo ao Banco Billionaire
+
+Por favor, selecione uma das opões abaixo:
+1- Caso seja nosso cliente.
+2- Se deseja realizar o cadastro no nosso Banco Billionaire.
+
+Opção: '''))
+		if menu01 == 1:
+			menu10()
+		elif menu01 == 2:
+			menu20()
+		else:
+			input('Opção inválida. Por favor, seleciona uma das opções listadas.')
+			return
+
+#1 - ok
+
+def menu10():
+	while True:
+		menu10 = input('''
+Olá!
+
+Por favor, selecione uma das opções abaixo:
+
+c - Criar nova conta
+d - Depositar
+s - Sacar
+e - Extrato
+z - Sair
+
+Opção: ''')
+		opcao=menu10.lower()
+		if opcao not in ['c','d', 's', 'e', 'z']:
+			print('Por favor, escolha uma das opções listadas.')
+			return
+		elif opcao == 'd':
+			deposito = float(input('Digite o valor desejado: '))
+			if deposito > 0:
+				dicionariomovimentações['conta']['saldo'] += deposito
+				print('Depósito realizado com sucesso!')
+				print(dicionariomovimentações['conta']['saldo'])#########################################################################
+			else:
+				print('Por favor, informe um valor válido!')
+				return
+		elif opcao == 's':
+			saque=float(input('Por favor, informe o valor que deseja sacar: '))
+			if saque < float(0):
+				print('Por favor, informe um valor válido!')
+				return
+			elif dicionariomovimentações['conta']['saquesn_restantes'] == 0:
+				print('Nª ultrapassa')
+				return
+			elif saque>500 or dicionariomovimentações['conta']['saques_limite_diario_restante'] == 0:
+				print('$ de saques ultrapassa o limite')
+				return
+				print(dicionariomovimentações['conta']['saques_limite_diario_restante']) ######################################################
+			elif dicionariomovimentações['conta']['saldo']<saque:
+				print('Saldo insuficiente.')
+				return
+				print(dicionariomovimentações['conta']["saldo"])  ##################################################
+			else:
+				dicionariomovimentações['conta']['saques_limite_diario_restante'] += -float(saque)
+				dicionariomovimentações['conta']['saquesn_restantes'] += -1
+				print('Saque realizado com sucesso!')
+				return
+		elif opcao == 'e':
+			extratopedido= f'''
+EXTRATO
+Saldo: {dicionariomovimentações['conta']['saldo']}.
+Quantidade de saques disponíveis: {dicionariomovimentações['conta']['saquesn_restantes']}.
+Limite de saque disponível: {dicionariomovimentações['conta']['saques_limite_diario_restante']}.'''
+			print(extratopedido)
+			return
+		elif opcao == 'c':
+			dicionariocontas['contas'] = int(dicionariocontas['contas']) + 1
+			dicionariomovimentações[dicionariocontas['contas']] = {'saldo': 0, 'totaisn_saques': 3, 'saquesn_feitos': 0,'saquesn_restantes': 3, 'saques_limite_diario_restante': 500}
+			print('Conta criada! Número da conta: {}'.format(dicionariocontas['contas']))
+
+			print(dicionariomovimentações)
+			print(dicionariocontas)
+		elif opcao == 'z':
+			print('''
+Obrigado por usar nosso sistema!
+Tenha um bom dia!''')
+			break
+
+#2 - ok
+
+def menu20():
+	while True:
+		#passo1():
+		cpf = input('''
+Olá!
+Para iniciar o cadastro no Banco Billionaire nos informe o seu CPF (somente números): ''')
+		if cpf in bibliotecadecpf:
+			print('O CPF informado já possui cadastro no Banco Billionaire')
+			return
+		elif len(cpf) != 11 or cpf.isdigit() == False:
+			print('CPF inválido!')
+			return
+		else:
+			bibliotecadecpf.append(cpf)
+			#pass2
+			nome=input('Por favor, informe o seu nome completo: ')
+			if len(nome) == 0 or nome.isdigit() == True:
+				input('Nome inválido! Por favor, informe o seu nome completo: ')
+				return
+			else:
+				bibliotecadenome.append(nome)
+	    	   	#passo3():
+				nascimento=input('Por favor, informe sua data de nascimento (DD/MM/AAAA): ')
+				if len(nascimento) == 8: #or nascimento.isdigit() == False:
+					print('Data de nascimento inválida!')
+					return
+				else:
+					bibliotecadenascimento.append(nascimento)
+	   				#passo4():
+					endereco=input('Por favor, informe o logradouro do seu endereça: ')
+					if len(endereco) == 0:
+						num=input('Endereço inválido. Por favor, informe o nº do seu endereça: ')
+						return
+					else:
+						bibliotecadendereco.append(endereco)
+						break
+	print('Cadastro realizado com sucesso! Obrigado por escolher o Banco Billionaire!')
